@@ -1,0 +1,38 @@
+<%- include("partials/header.ejs") %>
+
+<main class="text-center">
+  <section>
+    <div class="flex flex-col space-y-8 max-w-3xl mx-auto my-8">
+      <% books.forEach(function(book) { %>
+      <div
+        class="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-4 p-4 bg-gray-100 rounded-lg shadow-md"
+      >
+        <!-- Book cover thumbnail -->
+        <img
+          src="<%= book.cover %>"
+          alt="<%= book.title %> cover"
+          class="w-24 h-36 object-cover rounded-md mx-auto md:mx-0"
+        />
+
+        <!-- Book title and details -->
+        <div class="flex flex-col space-y-2 text-center md:text-left">
+          <h2 class="text-xl font-bold"><%= book.title %></h2>
+
+          <div class="text-sm text-gray-600">
+            <p><strong>Date Read:</strong> <%= book.dateRead %></p>
+            <p>
+              <strong>Recommendation:</strong> <%= book.recommendation %>/10
+            </p>
+          </div>
+
+          <!-- Book review -->
+          <div class="mt-4 text-gray-800">
+            <p><%= book.review %></p>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </section>
+</main>
+<%- include("partials/footer.ejs") %>

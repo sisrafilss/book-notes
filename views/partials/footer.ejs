@@ -1,0 +1,60 @@
+<!-- Footer Section -->
+<footer class="bg-gray-800 text-gray-200 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Footer Top: Logo & Navigation Links -->
+        <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start space-y-6 sm:space-y-0">
+            <!-- Logo & Description -->
+            <div class="flex flex-col items-center sm:items-start">
+                <h2 class="text-3xl font-bold text-white">BookNotes</h2>
+                <p class="mt-2 text-gray-400">Write a book reviews and notes to save it for a long time.</p>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex space-x-4">
+                <a href="/" class="text-gray-400 hover:text-white">Home</a>
+                <a href="create-post" class="text-gray-400 hover:text-white">Write a Review</a>
+                <a href="manage-blogs" class="text-gray-400 hover:text-white">Manage Reviews</a>
+                <a href="contact" class="text-gray-400 hover:text-white">Contact</a>
+            </nav>
+        </div>
+
+        <!-- Footer Bottom: Social Links & Copyright -->
+        <div class="flex flex-col sm:flex-row justify-between items-center sm:items-center mt-8 border-t border-gray-700 pt-6">
+            <!-- Social Links -->
+            <div class="flex space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 4.5c0-.7-.6-1.3-1.3-1.3H1.3C.6 3.2 0 3.8 0 4.5v15c0 .7.6 1.3 1.3 1.3h10.1v-6.5h-2.2v-2.5h2.2V9.9c0-2.2 1.3-3.5 3.4-3.5.9 0 1.8.1 2.1.1v2.5h-1.4c-1.1 0-1.4.6-1.4 1.4v1.9h2.7l-.3 2.5h-2.4V21.8h4.8c.7 0 1.3-.6 1.3-1.3V4.5z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.6 3H4.4C3 3 2 4 2 5.4v13.3C2 19.9 3 21 4.4 21h15.1c1.4 0 2.4-1.1 2.4-2.4V5.4C22 4 21 3 19.6 3zm-1 6.5h-2.1c-.2 0-.4-.1-.5-.3v-.3V7.7h-1.9v1.2v1.1c0 .4-.1.6-.5.6H12v2.3h2v-2.2v-.6c.1-.1.3-.2.5-.2h2.5v2.8v1.2h-2.5v2.4v.4h2.5v2.4v.4h2.2v-3.2v-1.1V9.5z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7.5c-.6.3-1.1.4-1.8.5.7-.4 1.2-1.1 1.4-1.8-.7.4-1.4.7-2.1.9-.6-.7-1.4-1-2.3-1-1.7 0-3.1 1.4-3.1 3.1 0 .2 0 .5.1.7-2.6-.1-5-1.3-6.5-3.2-.3.5-.5 1.1-.5 1.8 0 1.2.6 2.2 1.5 2.8-.6 0-1.1-.2-1.6-.4 0 1.6 1.1 2.8 2.6 3.1-.3.1-.7.2-1.1.2-.3 0-.5 0-.7-.1.5 1.5 2 2.5 3.7 2.6-1.4 1.1-3.1 1.8-5 1.8-.3 0-.7 0-1-.1 1.8 1.2 3.9 1.8 6.2 1.8 7.4 0 11.4-6.1 11.4-11.4v-.5c.8-.5 1.4-1.2 1.9-1.9z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.2C6.4 2.2 1.8 6.7 1.8 12.2c0 4.4 3.4 8.1 7.8 8.8v-6.2H7.6v-2.6h2.1v-2c0-2 1.2-3 3-3 .8 0 1.6.1 2.3.3v2.5h-1.6c-1 0-1.2.6-1.2 1.3v1.8h2.5l-.4 2.6h-2.1V21c4.4-.7 7.8-4.4 7.8-8.8 0-5.5-4.5-10-10-10z"/></svg>
+                </a>
+            </div>
+
+            <!-- Copyright -->
+            <p class="text-gray-400 mt-4 sm:mt-0">&copy; 2024 BookNotes. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Toggle mobile menu and switch icons
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+    });
+</script>
+
+</body>
+</html>

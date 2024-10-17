@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
 import axios from "axios";
-import 'dotenv/config';
+import "dotenv/config";
 
 const app = express();
 const port = 3000;
@@ -23,7 +23,7 @@ await db.connect();
 // Set the view engine to EJS
 app.set("view engine", "ejs");
 
-const API_URL = "https://www.googleapis.com/books/v1/volumes?";
+const API_URL = "https://www.googleapis.com/books/v1/volumes";
 
 app.get("/", (req, res) => {
   res.render("index", {
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/write-note", async (req, res) => {
-  res.render("writeNote");
+  res.render("searchBooks");
 });
 
 app.post("/search-books", async (req, res) => {
@@ -41,7 +41,7 @@ app.post("/search-books", async (req, res) => {
   const books = [];
   try {
     const result = await axios.get(
-      `${API_URL}q=${embededSearchText}&key=${process.env.API_KEY}`
+      `${API_URL}?q=${embededSearchText}&key=${process.env.API_KEY}`
     );
     result.data.items.forEach((item) => {
       const book = {
@@ -53,8 +53,58 @@ app.post("/search-books", async (req, res) => {
       };
       books.push(book);
     });
-    res.render("writeNote", { books: books });
+    res.render("searchBooks", { books: books });
     // console.log(books[0]);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/write-note", async (req, res) => {
+  const bookId = req.body.bookId;
+  try {
+    const result = await axios.get(`${API_URL}/${bookId}`);
+    const item = result.data;
+    const book = {
+      id: item.id,
+      title: item.volumeInfo.title,
+      author: item.volumeInfo.authors,
+      description: item.volumeInfo.description,
+      thumbnail: item.volumeInfo?.imageLinks?.thumbnail,
+    };
+    // console.log(result.data);
+    res.render("writeNote", { book: book });
+  } catch (err) {
+    console.log(err);
+  }
+
+  // res.render('')
+});
+
+app.post("/submit-notes", async (req, res) => {
+  const notes = req.body.notes;
+  const bookId = req.body.bookId;
+  try {
+    const result = await axios.get(`${API_URL}/${bookId}`);
+    const item = result.data;
+    const book = {
+      id: item.id,
+      title: item.volumeInfo.title,
+      author: item.volumeInfo.authors,
+      description: item.volumeInfo.description,
+      thumbnail: item.volumeInfo?.imageLinks?.thumbnail,
+      notes: notes,
+    };
+
+    try {
+      const response = await db.query(
+        "INSERT INTO notes (book_id, title, author, description, thumbnail, notes) VALUES ($1, $2, $3, $4, $5, $6)",
+        [book.id, book.title, book.author.join(','), book.description, book.thumbnail, book.notes]
+      );
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
   } catch (err) {
     console.log(err);
   }

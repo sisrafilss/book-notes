@@ -83,6 +83,8 @@ app.post("/write-note", async (req, res) => {
 
 app.post("/submit-notes", async (req, res) => {
   const notes = req.body.notes;
+  const recommendation = req.body.recommendation;
+  const readingDate = req.body.readingDate;
   const bookId = req.body.bookId;
   try {
     const result = await axios.get(`${API_URL}/${bookId}`);
@@ -93,15 +95,30 @@ app.post("/submit-notes", async (req, res) => {
       author: item.volumeInfo.authors,
       description: item.volumeInfo.description,
       thumbnail: item.volumeInfo?.imageLinks?.thumbnail,
-      notes: notes,
+      notes,
+      recommendation,
+      readingDate,
     };
 
     try {
       const response = await db.query(
-        "INSERT INTO notes (book_id, title, author, description, thumbnail, notes) VALUES ($1, $2, $3, $4, $5, $6)",
-        [book.id, book.title, book.author.join(','), book.description, book.thumbnail, book.notes]
+        "INSERT INTO notes (book_id, title, author, description, thumbnail, recommendation, reading_date, notes) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+        [
+          book.id,
+          book.title,
+          book.author?.length ? book.author.join(",") : '',
+          book.description,
+          book.thumbnail,
+          recommendation,
+          readingDate,
+          book.notes,
+        ]
       );
-      console.log(response);
+
+      if (response.rowCount) {
+        res.render('noteAddedSuccess');
+      }
+      
     } catch (err) {
       console.error(err);
     }

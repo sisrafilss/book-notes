@@ -25,10 +25,15 @@ app.set("view engine", "ejs");
 
 const API_URL = "https://www.googleapis.com/books/v1/volumes";
 
-app.get("/", (req, res) => {
-  res.render("index", {
-    books: books,
-  });
+app.get("/", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM notes");
+    res.render("index", {
+      books: result.rows,
+    });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 app.get("/write-note", async (req, res) => {
@@ -106,7 +111,7 @@ app.post("/submit-notes", async (req, res) => {
         [
           book.id,
           book.title,
-          book.author?.length ? book.author.join(",") : '',
+          book.author?.length ? book.author.join(",") : "",
           book.description,
           book.thumbnail,
           recommendation,
@@ -116,9 +121,8 @@ app.post("/submit-notes", async (req, res) => {
       );
 
       if (response.rowCount) {
-        res.render('noteAddedSuccess');
+        res.render("noteAddedSuccess");
       }
-      
     } catch (err) {
       console.error(err);
     }

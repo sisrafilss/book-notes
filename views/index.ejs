@@ -9,7 +9,7 @@
       >
         <!-- Book cover thumbnail -->
         <img
-          src="<%= book.cover %>"
+          src="<%= book.thumbnail %>"
           alt="<%= book.title %> cover"
           class="w-24 h-36 object-cover rounded-md mx-auto md:mx-0"
         />
@@ -19,15 +19,15 @@
           <h2 class="text-xl font-bold"><%= book.title %></h2>
 
           <div class="text-sm text-gray-600">
-            <p><strong>Date Read:</strong> <%= book.dateRead %></p>
+            <p><strong>Date Read:</strong> <%= book.reading_date %></p>
             <p>
-              <strong>Recommendation:</strong> <%= book.recommendation %>/10
+              <strong>Recommendation:</strong> <%= book?.recommendation %>/10
             </p>
           </div>
 
           <!-- Book review -->
           <div class="mt-4 text-gray-800">
-            <p><%= book.review %></p>
+            <p><%= book.notes %></p>
           </div>
         </div>
       </div>

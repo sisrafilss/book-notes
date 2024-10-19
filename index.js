@@ -27,7 +27,7 @@ const API_URL = "https://www.googleapis.com/books/v1/volumes";
 
 app.get("/", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM notes");
+    const result = await db.query("SELECT * FROM notes ORDER BY id ASC");
     res.render("index", {
       books: result.rows,
     });
@@ -38,12 +38,47 @@ app.get("/", async (req, res) => {
 
 app.get("/manage-notes", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM notes");
+    const result = await db.query("SELECT * FROM notes ORDER BY id ASC");
     res.render("manageNotes", {
       books: result.rows,
     });
   } catch (err) {
     console.error(err);
+  }
+});
+
+app.get("/edit/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const result = await db.query("SELECT * FROM notes WHERE id = ($1)", [id]);
+    res.render("editBook", {
+      book: result.rows[0],
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.post("/edit/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const result = await db.query(
+      "UPDATE notes SET reading_date = $1, recommendation = $2, notes = $3 WHERE id = $4",
+      [req.body.readingDate, req.body.recommendation, req.body.notes, id]
+    );
+    res.redirect("/manage-notes");
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.post('/delete/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    await db.query("DELETE FROM notes WHERE id = $1", [id]);
+    res.redirect("/manage-notes");
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -93,8 +128,6 @@ app.post("/write-note", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-
-  // res.render('')
 });
 
 app.post("/submit-notes", async (req, res) => {
